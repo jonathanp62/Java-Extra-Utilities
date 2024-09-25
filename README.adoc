@@ -1,0 +1,7 @@
+Extra-Utilities
+---------------
+
+A library that contains extra utility classes.
+
+Current version: 1.0.0.
+~~~~~~~~~~~~~~~~~~~~~~~
