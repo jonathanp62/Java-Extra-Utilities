@@ -45,7 +45,7 @@ apply plugin : 'java'
 ext {
     execDescription = 'Run the main class with JavaExecTask'
     execGroup = 'Execution'
-    javaMainClass = 'net.jmp.demo.forkjoinpool.Bootstrap'
+    javaMainClass = 'net.jmp.demo.util.extra.Bootstrap'
     logConfigFile = '-Dlogback.configurationFile=config/logback.xml'
     macosArchitecture = System.getProperty('macosArchitecture')
     useAssertions = '-ea'
@@ -77,13 +77,15 @@ repositories {
 dependencies {
     runtimeOnly         libs.ch.qos.logback.logback.classic
     runtimeOnly         libs.ch.qos.logback.logback.core
+    implementation      libs.net.jmp.util.extra.extra.utilities
     implementation      libs.net.jmp.util.logging.logging.utilities
     implementation      libs.org.slf4j.slf4j.api
     testImplementation  libs.junit.junit
+    testImplementation  libs.net.jmp.util.testing.testutil.testing.utilities
 }
 
-group = 'net.jmp.util.extra'
-version = '0.3.0'
+group = 'net.jmp.demo.util.extra'
+version = '1.0.0'
 description = 'Extra-Utilities-App'
 
 println "The groupId is ${project.group}"
@@ -91,6 +93,10 @@ println "The artifactId is ${project.name}" // Set in settings.gradle
 println "The version is ${project.version}"
 
 java.sourceCompatibility = JavaVersion.VERSION_23
+
+jar {
+    archiveBaseName = 'extra-utilities-demo'
+}
 
 java {
     withSourcesJar()
@@ -103,7 +109,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = project.group
-            artifactId = project.name
+            artifactId = 'extra-utilities-demo'
             version = project.version
 
             from components.java
@@ -121,7 +127,14 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.withType(Javadoc).configureEach {
-    options.encoding = 'UTF-8'
+    CoreJavadocOptions cjo = options as CoreJavadocOptions
+    StandardJavadocDocletOptions sjdo = options as StandardJavadocDocletOptions
+
+    cjo.encoding("UTF-8")
+    cjo.addStringOption("source", "23")
+    cjo.memberLevel = JavadocMemberLevel.PRIVATE
+
+    sjdo.version(true)
 }
 
 /*

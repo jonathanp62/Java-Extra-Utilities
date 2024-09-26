@@ -31,12 +31,16 @@
 ch-qos-logback-logback-classic = "1.5.8"
 ch-qos-logback-logback-core = "1.5.8"
 junit-junit = "4.13.2"
+net-jmp-util-extra-extra-utilities = "1.0.0"
 net-jmp-util-logging-logging-utilities = "1.0.0"
+net-jmp-util-testing-testutil-testing-utilities = "1.0.0"
 org-slf4j-slf4j-api = "2.0.16"
 
 [libraries]
 ch-qos-logback-logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "ch-qos-logback-logback-classic" }
 ch-qos-logback-logback-core = { module = "ch.qos.logback:logback-core", version.ref = "ch-qos-logback-logback-core" }
 junit-junit = { module = "junit:junit", version.ref = "junit-junit" }
+net-jmp-util-extra-extra-utilities = { module = "net.jmp.util.extra:extra-utilities", version.ref = "net-jmp-util-extra-extra-utilities" }
 net-jmp-util-logging-logging-utilities = { module = "net.jmp.util.logging:logging-utilities", version.ref = "net-jmp-util-logging-logging-utilities" }
+net-jmp-util-testing-testutil-testing-utilities = { module = "net.jmp.util.testing.testutil:testing-utilities", version.ref = "net-jmp-util-testing-testutil-testing-utilities" }
 org-slf4j-slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "org-slf4j-slf4j-api" }

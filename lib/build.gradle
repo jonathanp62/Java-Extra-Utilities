@@ -99,7 +99,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = project.group
-            artifactId = project.name
+            artifactId = 'extra-utilities'
             version = project.version
 
             from components.java
