@@ -72,7 +72,8 @@ repositories {
 }
 
 dependencies {
-    testImplementation libs.junit.junit
+    implementation      libs.com.google.guava.guava
+    testImplementation  libs.junit.junit
 }
 
 group = 'net.jmp.util.extra'

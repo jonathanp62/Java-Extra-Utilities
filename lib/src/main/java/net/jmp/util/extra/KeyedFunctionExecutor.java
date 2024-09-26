@@ -1,5 +1,11 @@
+package net.jmp.util.extra;
+
 /*
- * (#)module-info.java  1.0.0   09/25/2024
+ * (#)KeyedFunctionExecutor.java    1.1.0   09/26/2024
+ *
+ * @author   Jonathan Parker
+ * @version  1.1.0
+ * @since    1.1.0
  *
  * MIT License
  *
@@ -24,12 +30,22 @@
  * SOFTWARE.
  */
 
-/// The extra utilities library module.
-///
-/// @since  1.0.0
-module extra.utilities {
-    requires java.base;
-    requires com.google.common;
+import com.google.common.util.concurrent.Striped;
 
-    exports net.jmp.util.extra;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import java.util.concurrent.*;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+
+import java.util.function.Function;
+
+/// The keyed function executor.
+///
+/// @param  <T> The type of value
+public final class KeyedFunctionExecutor<T> {
 }

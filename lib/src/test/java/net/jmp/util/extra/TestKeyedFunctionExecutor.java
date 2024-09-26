@@ -1,5 +1,7 @@
+package net.jmp.util.extra;
+
 /*
- * (#)module-info.java  1.0.0   09/25/2024
+ * (#)TestKeyedFunctionExecutor.java    1.1.0   09/26/2024
  *
  * MIT License
  *
@@ -24,12 +26,17 @@
  * SOFTWARE.
  */
 
-/// The extra utilities library module.
-///
-/// @since  1.0.0
-module extra.utilities {
-    requires java.base;
-    requires com.google.common;
+import static org.junit.Assert.*;
 
-    exports net.jmp.util.extra;
+import org.junit.Test;
+
+/// The test class for WrappedObject.
+///
+/// @version    1.1.0
+/// @since      1.1.0
+public class TestKeyedFunctionExecutor {
+    @Test
+    public void test() {
+        assertTrue(true);
+    }
 }
