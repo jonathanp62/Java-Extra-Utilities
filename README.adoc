@@ -6,6 +6,7 @@ A library that contains extra utility classes along with a demonstration applica
 Library Classes
 ~~~~~~~~~~~~~~~
 
+* KeyedFunctionExecutor
 * WrappedObject
 
 Application Logging
@@ -16,7 +17,8 @@ Logging is achieved using the SLF4J facade over Logback. The logging configurati
 Application Demonstrated Concepts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+* KeyedFunctionExecutor
 * WrappedObject
 
-Current version: 1.0.0.
+Current version: 1.1.0.
 ~~~~~~~~~~~~~~~~~~~~~~~
