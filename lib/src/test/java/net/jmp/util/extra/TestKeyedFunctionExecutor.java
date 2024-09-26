@@ -26,17 +26,61 @@ package net.jmp.util.extra;
  * SOFTWARE.
  */
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import java.util.function.Function;
+
+import java.util.stream.IntStream;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-/// The test class for WrappedObject.
+/// The test class for KeyedFunctionExecutor.
 ///
 /// @version    1.1.0
 /// @since      1.1.0
 public class TestKeyedFunctionExecutor {
     @Test
-    public void test() {
+    public void testString() {
+        final List<String> list = new ArrayList<>();
+        final List<String> results = Collections.synchronizedList(list);
+
+        try (final KeyedFunctionExecutor<String> keyedFunctionExecutor = new KeyedFunctionExecutor<>()) {
+            final Function<String, Void> function = s -> {
+                results.add(s);
+
+                return null;
+            };
+
+            final List<String> elements =
+                    IntStream.rangeClosed(1, 50)
+                            .mapToObj(String::valueOf)
+                            .toList();
+
+            elements.forEach(e -> {
+                keyedFunctionExecutor.process(function, e, String.format("-%s-", e));
+            });
+        }
+
+        assertFalse(results.isEmpty());
+        assertEquals(50, results.size());
+
+        final List<String> expected =
+                IntStream.rangeClosed(1, 50)
+                        .mapToObj(String::valueOf)
+                        .map(s -> String.format("-%s-", s))
+                        .toList();
+
+        expected.forEach(e -> {
+            assertTrue(results.contains(e));
+        });
+    }
+
+    @Test
+    public void testNumber() {
         assertTrue(true);
     }
 }
