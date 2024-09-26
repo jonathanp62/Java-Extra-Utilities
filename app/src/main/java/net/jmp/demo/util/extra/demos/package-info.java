@@ -1,7 +1,5 @@
-package net.jmp.demo.util.extra;
-
 /*
- * (#)TestMain.java 1.0.0   09/26/2024
+ * (#)package-info.java 1.0.0   09/26/2024
  *
  * MIT License
  *
@@ -26,28 +24,8 @@ package net.jmp.demo.util.extra;
  * SOFTWARE.
  */
 
-import static net.jmp.util.testing.testutil.TestUtils.*;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-/// The test class for StreamGatherersDemo.
+/// The package used to contain the demonstration classes run by the Main class.
 ///
 /// @version    1.0.0
 /// @since      1.0.0
-public final class TestMain {
-    @Test
-    public void testWrappedObject() throws Exception {
-        final var demo = new Main(new String[] {});
-        final var method = Main.class.getDeclaredMethod("wrappedObject");
-
-        method.setAccessible(true);
-
-        final Object o = method.invoke(demo);
-        final String result = castToType(String.class, o);
-
-        assertNotNull(result);
-        assertEquals("Jonathan's wrapped object", result);
-    }
-}
+package net.jmp.demo.util.extra.demos;

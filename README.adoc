@@ -1,7 +1,22 @@
 Extra-Utilities
 ---------------
 
-A library that contains extra utility classes.
+A library that contains extra utility classes along with a demonstration application.
+
+Library Classes
+~~~~~~~~~~~~~~~
+
+* WrappedObject
+
+Application Logging
+~~~~~~~~~~~~~~~~~~~
+
+Logging is achieved using the SLF4J facade over Logback. The logging configuration is supplied in *config/logback.xml*. It can be overridden with a java system property, i.e. *-Dlogback.configurationFile=config/logback.xml*
+
+Application Demonstrated Concepts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* WrappedObject
 
 Current version: 1.0.0.
 ~~~~~~~~~~~~~~~~~~~~~~~

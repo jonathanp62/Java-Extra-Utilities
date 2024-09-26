@@ -1,7 +1,7 @@
-package net.jmp.demo.util.extra;
+package net.jmp.demo.util.extra.demos;
 
 /*
- * (#)Main.java 1.0.0   09/26/2024
+ * (#)WrappedObjectDemo.java    1.0.0   09/26/2024
  *
  * MIT License
  *
@@ -26,61 +26,58 @@ package net.jmp.demo.util.extra;
  * SOFTWARE.
  */
 
-import java.util.Objects;
-
-import java.util.stream.Stream;
-
-import net.jmp.demo.util.extra.demos.Demo;
-import net.jmp.demo.util.extra.demos.WrappedObjectDemo;
+import net.jmp.util.extra.WrappedObject;
 
 import static net.jmp.util.logging.LoggerUtils.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/// The main class. This class is instantiated
-/// and run from the bootstrap class when the
-/// application starts.
+/// The class that demonstrates the wrapped object.
 ///
 /// @version    1.0.0
 /// @since      1.0.0
-final class Main implements Runnable {
+public final class WrappedObjectDemo implements Demo {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-    /// The command line arguments.
-    private final String[] arguments;
-
-    /// A constructor that takes the
-    /// command line arguments from
-    /// the bootstrap class.
-    ///
-    /// @param  args    java.lang.String[]
-    Main(final String[] args) {
+    /// The default constructor.
+    public WrappedObjectDemo() {
         super();
-
-        this.arguments = Objects.requireNonNull(args);
     }
 
-    /// The run method.
+    /// The demo method.
     @Override
-    public void run() {
+    public void demo() {
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(entry());
         }
 
-        if (this.logger.isInfoEnabled() || this.logger.isWarnEnabled() || this.logger.isErrorEnabled()) {
-            System.out.format("%s %s%n", Name.NAME_STRING, Version.VERSION_STRING);
-        } else {
-            this.logger.debug("{} {}", Name.NAME_STRING, Version.VERSION_STRING);
+        if (this.logger.isInfoEnabled()) {
+            this.logger.info(this.wrappedObject());
         }
-
-        Stream.of(
-                new WrappedObjectDemo()
-        ).forEach(Demo::demo);
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exit());
         }
+    }
+
+    /// Demonstrate the wrapped object.
+    ///
+    /// @return java.lang.String
+    private String wrappedObject() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
+        final WrappedObject<String> wrappedObject = new WrappedObject<>();
+
+        wrappedObject.set("Jonathan's wrapped object");
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(wrappedObject.get()));
+        }
+
+        return wrappedObject.get();
     }
 }
