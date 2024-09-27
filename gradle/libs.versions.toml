@@ -37,6 +37,8 @@ junit-junit = "4.13.2"
 net-jmp-util-extra-extra-utilities = "1.2.0"
 net-jmp-util-logging-logging-utilities = "1.1.0"
 net-jmp-util-testing-testutil-testing-utilities = "1.0.0"
+org-assertj-assertj-core = "3.26.3"
+org-awaitility-awaitility = "4.2.2"
 org-slf4j-slf4j-api = "2.0.16"
 
 [libraries]
@@ -47,4 +49,6 @@ junit-junit = { module = "junit:junit", version.ref = "junit-junit" }
 net-jmp-util-extra-extra-utilities = { module = "net.jmp.util.extra:extra-utilities", version.ref = "net-jmp-util-extra-extra-utilities" }
 net-jmp-util-logging-logging-utilities = { module = "net.jmp.util.logging:logging-utilities", version.ref = "net-jmp-util-logging-logging-utilities" }
 net-jmp-util-testing-testutil-testing-utilities = { module = "net.jmp.util.testing.testutil:testing-utilities", version.ref = "net-jmp-util-testing-testutil-testing-utilities" }
+org-assertj-assertj-core = { module = "org.assertj:assertj-core", version.ref = "org-assertj-assertj-core" }
+org-awaitility-awaitility = { module = "org.awaitility:awaitility", version.ref = "org-awaitility-awaitility" }
 org-slf4j-slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "org-slf4j-slf4j-api" }

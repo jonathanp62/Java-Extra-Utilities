@@ -26,6 +26,26 @@ package net.jmp.util.extra;
  * SOFTWARE.
  */
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import java.util.concurrent.TimeUnit;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import java.util.stream.IntStream;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.awaitility.Awaitility.await;
+
 /// A test class for AppliedList.
 ///
 /// @version    1.2.0
