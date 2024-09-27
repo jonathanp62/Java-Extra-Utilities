@@ -1,8 +1,7 @@
-package net.jmp.demo.util.extra;
+package net.jmp.demo.util.extra.demos;
 
 /*
- * (#)Main.java 1.1.0   09/27/2024
- * (#)Main.java 1.0.0   09/26/2024
+ * (#)KeyedFunctionExecutorDemo.java    1.1.0   09/27/2024
  *
  * MIT License
  *
@@ -27,60 +26,46 @@ package net.jmp.demo.util.extra;
  * SOFTWARE.
  */
 
-import java.util.Objects;
+import java.util.function.Consumer;
 
 import java.util.stream.Stream;
 
-import net.jmp.demo.util.extra.demos.Demo;
-import net.jmp.demo.util.extra.demos.KeyedFunctionExecutorDemo;
-import net.jmp.demo.util.extra.demos.WrappedObjectDemo;
+import net.jmp.util.extra.KeyedFunctionExecutor;
 
 import static net.jmp.util.logging.LoggerUtils.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/// The main class. This class is instantiated
-/// and run from the bootstrap class when the
-/// application starts.
+/// The class that demonstrates the keyed function executor.
 ///
 /// @version    1.1.0
-/// @since      1.0.0
-final class Main implements Runnable {
+/// @since      1.1.0
+public final class KeyedFunctionExecutorDemo implements Demo {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-    /// The command line arguments.
-    private final String[] arguments;
-
-    /// A constructor that takes the
-    /// command line arguments from
-    /// the bootstrap class.
-    ///
-    /// @param  args    java.lang.String[]
-    Main(final String[] args) {
+    /// The default constructor.
+    public KeyedFunctionExecutorDemo() {
         super();
-
-        this.arguments = Objects.requireNonNull(args);
     }
 
-    /// The run method.
+    /// The demo method.
     @Override
-    public void run() {
+    public void demo() {
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(entry());
         }
 
-        if (this.logger.isInfoEnabled() || this.logger.isWarnEnabled() || this.logger.isErrorEnabled()) {
-            System.out.format("%s %s%n", Name.NAME_STRING, Version.VERSION_STRING);
-        } else {
-            this.logger.debug("{} {}", Name.NAME_STRING, Version.VERSION_STRING);
-        }
+        try (final KeyedFunctionExecutor<String> keyedFunctionExecutor = new KeyedFunctionExecutor<>()) {
+            final Consumer<String> consumer = this.logger::info;
 
-        Stream.of(
-                new WrappedObjectDemo(),
-                new KeyedFunctionExecutorDemo()
-        ).forEach(Demo::demo);
+            final Stream<String> elements = Stream.of("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
+
+            elements.forEach(e -> {
+                keyedFunctionExecutor.process(consumer, e, e.toUpperCase());
+            });
+        }
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exit());
