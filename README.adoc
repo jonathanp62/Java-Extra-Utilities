@@ -6,6 +6,9 @@ A library that contains extra utility classes along with a demonstration applica
 Library Classes
 ~~~~~~~~~~~~~~~
 
+* AppliedList
+* AppliedQueue
+* AppliedSet
 * KeyedFunctionExecutor
 * WrappedObject
 
@@ -20,5 +23,5 @@ Application Demonstrated Concepts
 * KeyedFunctionExecutor
 * WrappedObject
 
-Current version: 1.1.0.
+Current version: 1.2.0.
 ~~~~~~~~~~~~~~~~~~~~~~~
