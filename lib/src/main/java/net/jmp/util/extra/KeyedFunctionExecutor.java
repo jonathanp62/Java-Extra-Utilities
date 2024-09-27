@@ -42,12 +42,18 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 
-import java.util.function.Function;
+import java.util.function.Consumer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /// The keyed function executor.
 ///
 /// @param  <T> The type of value
 public final class KeyedFunctionExecutor<T> implements AutoCloseable {
+    /// The logger.
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
     /// The default number of threads.
     private static final int DEFAULT_NUMBER_OF_THREADS = Runtime.getRuntime().availableProcessors();
 
@@ -58,7 +64,7 @@ public final class KeyedFunctionExecutor<T> implements AutoCloseable {
     private final ExecutorService executor;
 
     /// A list of runnable futures.
-    private final List<Future<Void>> futures = new ArrayList<>();
+    private final List<Future<?>> futures = new ArrayList<>();
 
     /// Control access to the map.
     private final Striped<ReadWriteLock> locks = Striped.readWriteLock(64);
@@ -98,8 +104,8 @@ public final class KeyedFunctionExecutor<T> implements AutoCloseable {
                 try {
                     future.get();
                 } catch (final InterruptedException | ExecutionException e) {
-                    System.err.println("A thread incurred an exception or was interrupted");
-                    e.printStackTrace(System.err);
+                    this.logger.error("A thread incurred an exception or was interrupted");
+                    this.logger.error(e.getMessage(), e);
 
                     if (e instanceof InterruptedException) {
                         Thread.currentThread().interrupt();
@@ -111,13 +117,13 @@ public final class KeyedFunctionExecutor<T> implements AutoCloseable {
         this.futures.clear();
     }
 
-    /// Process the keyed function.
+    /// Process the keyed consumer function.
     ///
-    /// @param  function    java.util.function.Function<? super T, java.lang.Void>
-    /// @param  key         java.lang.String
-    /// @param  value       T
-    public void process(final Function<? super T, Void> function, final String key, final T value) {
-        Objects.requireNonNull(function);
+    /// @param  action  java.util.function.Consumer<? super T>
+    /// @param  key     java.lang.String
+    /// @param  value   T
+    public void process(final Consumer<? super T> action, final String key, final T value) {
+        Objects.requireNonNull(action);
         Objects.requireNonNull(key);
         Objects.requireNonNull(value);
 
@@ -127,12 +133,12 @@ public final class KeyedFunctionExecutor<T> implements AutoCloseable {
 
         if (lock.tryLock()) {
             try {
-                while (map.containsKey(key)) {
-                    final T val = map.get(key);
+                while (this.map.containsKey(key)) {
+                    final T val = this.map.get(key);
 
                     this.map.remove(key);
 
-                    final Future<Void> future = this.executor.submit(() -> function.apply(val));
+                    final Future<?> future = this.executor.submit(() -> action.accept(val));
 
                     this.futures.add(future);
                 }
@@ -140,7 +146,7 @@ public final class KeyedFunctionExecutor<T> implements AutoCloseable {
                 lock.unlock();
             }
         } else {
-            System.err.format("Failed to acquire a lock: %s%n", key);
+            this.logger.warn("Failed to acquire lock: {}", key);
         }
     }
 }

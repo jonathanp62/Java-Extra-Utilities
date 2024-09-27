@@ -1,4 +1,5 @@
 /*
+ * (#)module-info.java  1.1.0   09/27/2024
  * (#)module-info.java  1.0.0   09/25/2024
  *
  * MIT License
@@ -30,6 +31,7 @@
 module extra.utilities {
     requires java.base;
     requires com.google.common;
+    requires org.slf4j;
 
     exports net.jmp.util.extra;
 }

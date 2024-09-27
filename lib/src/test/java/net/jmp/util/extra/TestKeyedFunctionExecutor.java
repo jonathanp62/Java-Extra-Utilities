@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import java.util.stream.IntStream;
 
@@ -49,11 +49,7 @@ public class TestKeyedFunctionExecutor {
         final List<String> results = Collections.synchronizedList(list);
 
         try (final KeyedFunctionExecutor<String> keyedFunctionExecutor = new KeyedFunctionExecutor<>()) {
-            final Function<String, Void> function = s -> {
-                results.add(s);
-
-                return null;
-            };
+            final Consumer<String> consumer = results::add;
 
             final List<String> elements =
                     IntStream.rangeClosed(1, 50)
@@ -61,7 +57,7 @@ public class TestKeyedFunctionExecutor {
                             .toList();
 
             elements.forEach(e -> {
-                keyedFunctionExecutor.process(function, e, String.format("-%s-", e));
+                keyedFunctionExecutor.process(consumer, e, String.format("-%s-", e));
             });
         }
 
@@ -81,6 +77,33 @@ public class TestKeyedFunctionExecutor {
 
     @Test
     public void testNumber() {
-        assertTrue(true);
+        final List<Integer> list = new ArrayList<>();
+        final List<Integer> results = Collections.synchronizedList(list);
+
+        try (final KeyedFunctionExecutor<Integer> keyedFunctionExecutor = new KeyedFunctionExecutor<>()) {
+            final Consumer<Integer> consumer = results::add;
+
+            final List<Integer> elements =
+                    IntStream.rangeClosed(1, 50)
+                            .boxed()
+                            .toList();
+
+            elements.forEach(e -> {
+                keyedFunctionExecutor.process(consumer, String.valueOf(e), e * 10);
+            });
+        }
+
+        assertFalse(results.isEmpty());
+        assertEquals(50, results.size());
+
+        final List<Integer> expected =
+                IntStream.rangeClosed(1, 50)
+                        .boxed()
+                        .map(i -> i * 10)
+                        .toList();
+
+        expected.forEach(e -> {
+            assertTrue(results.contains(e));
+        });
     }
 }
