@@ -1,6 +1,8 @@
 /*
  * (#)module-info.java  1.0.0   09/26/2024
  *
+ * @version  1.0.0
+ *
  * MIT License
  *
  * Copyright (c) 2024 Jonathan M. Parker

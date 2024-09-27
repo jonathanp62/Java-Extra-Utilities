@@ -74,6 +74,7 @@ repositories {
 
 dependencies {
     implementation      libs.com.google.guava.guava
+    implementation      libs.net.jmp.util.logging.logging.utilities
     implementation      libs.org.slf4j.slf4j.api
     testImplementation  libs.junit.junit
 }

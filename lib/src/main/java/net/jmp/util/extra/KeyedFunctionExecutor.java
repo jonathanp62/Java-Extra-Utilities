@@ -44,6 +44,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 
 import java.util.function.Consumer;
 
+import static net.jmp.util.logging.LoggerUtils.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,19 +95,30 @@ public final class KeyedFunctionExecutor<T> implements AutoCloseable {
     /// Close any resources.
     @Override
     public void close() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
         this.waitForFutures();
         this.executor.shutdown();
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
     }
 
     /// Wait for any futures to complete.
     private void waitForFutures() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
         this.futures.forEach(future -> {
             if (!future.isDone()) {
                 try {
                     future.get();
                 } catch (final InterruptedException | ExecutionException e) {
-                    this.logger.error("A thread incurred an exception or was interrupted");
-                    this.logger.error(e.getMessage(), e);
+                    this.logger.error(catching(e));
 
                     if (e instanceof InterruptedException) {
                         Thread.currentThread().interrupt();
@@ -115,6 +128,10 @@ public final class KeyedFunctionExecutor<T> implements AutoCloseable {
         });
 
         this.futures.clear();
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
     }
 
     /// Process the keyed consumer function.
@@ -123,6 +140,10 @@ public final class KeyedFunctionExecutor<T> implements AutoCloseable {
     /// @param  key     java.lang.String
     /// @param  value   T
     public void process(final Consumer<? super T> action, final String key, final T value) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(action, key, value));
+        }
+
         Objects.requireNonNull(action);
         Objects.requireNonNull(key);
         Objects.requireNonNull(value);
@@ -147,6 +168,10 @@ public final class KeyedFunctionExecutor<T> implements AutoCloseable {
             }
         } else {
             this.logger.warn("Failed to acquire lock: {}", key);
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
         }
     }
 }

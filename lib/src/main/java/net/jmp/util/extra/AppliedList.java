@@ -1,0 +1,681 @@
+package net.jmp.util.extra;
+
+/*
+ * (#)AppliedList.java  1.2.0   09/27/2024
+ *
+ * MIT License
+ *
+ * Copyright (c) 2024 Jonathan M. Parker
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+import java.util.*;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import static net.jmp.util.logging.LoggerUtils.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/// An applied list.
+///
+/// @param  <T> The type of element
+/// @version    1.2.0
+/// @since      1.2.0
+public final class AppliedList<T> extends AppliedBaseCollection<T> implements List<T>, AutoCloseable {
+    /// The logger.
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
+    /// The list.
+    private final List<T> list;
+
+    /// The default constructor.
+    public AppliedList() {
+        super();
+
+        this.list = new ArrayList<>();
+    }
+
+    /// A constructor that takes
+    /// the number of threads to use.
+    ///
+    /// @param  numThreads  int
+    public AppliedList(final int numThreads) {
+        super(numThreads);
+
+        this.list = new ArrayList<>();
+    }
+
+    /// A constructor that takes a list
+    /// and creates an unmodifiable object.
+    ///
+    /// @param  list    java.util.List<? extends T>
+    private AppliedList(final List<? extends T> list) {
+        super();
+
+        this.list = Collections.unmodifiableList(list);
+    }
+
+    /// Create an empty applied list.
+    ///
+    /// @param  <T> The type of element
+    /// @return     net.jmp.util.extra.AppliedList<T>
+    public static <T> AppliedList<T> of() {
+        return new AppliedList<>(new ArrayList<>());
+    }
+
+    /// Create an applied list with one element.
+    ///
+    /// @param  <T> The type of element
+    /// @param  t   T
+    /// @return     net.jmp.util.extra.AppliedList<T>
+    public static <T> AppliedList<T> of(final T t) {
+        final AppliedList<T> list = new AppliedList<>();
+
+        list.add(Objects.requireNonNull(t));
+
+        return new AppliedList<>(list);
+    }
+
+    /// Create an applied list with two elements.
+    ///
+    /// @param  <T> The type of element
+    /// @param  t1  T
+    /// @param  t2  T
+    /// @return     net.jmp.util.extra.AppliedList<T>
+    public static <T> AppliedList<T> of(final T t1, final T t2) {
+        final AppliedList<T> list = new AppliedList<>();
+
+        list.add(Objects.requireNonNull(t1));
+        list.add(Objects.requireNonNull(t2));
+
+        return new AppliedList<>(list);
+    }
+
+    /// Create an applied list with three elements.
+    ///
+    /// @param  <T> The type of element
+    /// @param  t1  T
+    /// @param  t2  T
+    /// @param  t3  T
+    /// @return     net.jmp.util.extra.AppliedList<T>
+    public static <T> AppliedList<T> of(final T t1, final T t2, final T t3) {
+        final AppliedList<T> list = new AppliedList<>();
+
+        list.add(Objects.requireNonNull(t1));
+        list.add(Objects.requireNonNull(t2));
+        list.add(Objects.requireNonNull(t3));
+
+        return new AppliedList<>(list);
+    }
+
+    /// Close any resources.
+    @Override
+    public void close() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
+        super.close();
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
+    }
+
+    /// Inserts the element into the list if the
+    /// applied predicate function evaluates to true.
+    ///
+    /// @param  t       T
+    /// @param  filter  java.util.function.Predicate<? super T>
+    /// @return         boolean
+    public boolean addIf(final T t, final Predicate<? super T> filter) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(t, filter));
+        }
+
+        final boolean result = super.addIf(t, this.list, filter);
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Inserts the element into the list after applying
+    /// the mapper function if the applied predicate
+    /// function evaluates to true.
+    ///
+    /// @param  t       T
+    /// @param  mapper  java.util.function.Function<? super T,? extends T>
+    /// @param  filter  java.util.function.Predicate<? super T>
+    /// @return         boolean
+    public boolean applyAndAddIf(final T t, final Function<? super T, ? extends T> mapper, final Predicate<? super T> filter) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(t, mapper, filter));
+        }
+
+        final boolean result = super.applyAndAddIf(t, this.list, mapper, filter);
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Inserts the element into the list after applying the mapper function.
+    ///
+    /// @param  t       T
+    /// @param  mapper  java.util.function.Function<? super T, ? extends T>
+    /// @return         boolean
+    public boolean applyAndAdd(final T t, final Function<? super T, ? extends T> mapper) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(t, mapper));
+        }
+
+        final boolean result = super.applyAndAdd(t, this.list, mapper);
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Adds all the elements in the specified collection to this list.
+    /// Apply the mapper function to each element before adding it.
+    ///
+    /// @param  c       java.util.Collection<? extends T>
+    /// @param  mapper  java.util.function.Function<? super T, ? extends T>
+    /// @return         boolean
+    public boolean applyAndAddAll(final Collection<? extends T> c, final Function<? super T, ? extends T> mapper) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(c, mapper));
+        }
+
+        final boolean result = super.applyAndAddAll(this.list, c, mapper);
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Apply the onElement to each element
+    /// and then clear the list.
+    ///
+    /// @param  onElement   java.util.function.Consumer<? super T>
+    /// @param  onEnd       java.lang.Runnable
+    public void clearAndApply(final Consumer<? super T> onElement, final Runnable onEnd) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(onElement, onEnd));
+        }
+
+        super.clearAndApply(this.list, onElement, onEnd);
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
+    }
+
+    /// Consume all the elements in the list.
+    ///
+    /// @param  onElement   java.util.function.Consumer<? super T>
+    /// @param  onEnd       java.lang.Runnable
+    public void consume(final Consumer<? super T> onElement, final Runnable onEnd) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(onElement, onEnd));
+        }
+
+        super.consume(this.list, onElement, onEnd);
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
+    }
+
+    /// Removes the first occurrence of this element from the list if one exists.
+    /// Apply the consumer to the removed element if it is not null.
+    ///
+    /// @param  object      T
+    /// @param  consumer    java.util.function.Consumer<? super T>
+    /// @return             boolean
+    public boolean removeAndApply(final T object, final Consumer<? super T> consumer) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(object, consumer));
+        }
+
+        final int index = this.list.indexOf(object);
+
+        boolean result = false;
+
+        if (index >= 0) {
+            final T element = this.list.get(index);
+
+            result = this.list.remove(element);
+
+            if (element != null) {
+                super.runTask(() -> consumer.accept(element));
+            }
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Removes the element at the indexed position from the list.
+    /// Apply the consumer to the removed element if it is not null.
+    ///
+    /// @param  index       int
+    /// @param  consumer    java.util.function.Consumer<? super T>
+    /// @return             T
+    public T removeAndApply(final int index, final Consumer<? super T> consumer) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(index, consumer));
+        }
+
+        final T element = this.list.remove(index);
+
+        if (element != null) {
+            super.runTask(() -> consumer.accept(element));
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(element));
+        }
+
+        return element;
+    }
+
+    /// Removes all of this collection's elements that are also contained in the specified
+    /// collection (optional operation). After this call returns, this collection will contain
+    /// no elements in common with the specified collection.
+    /// Apply the onElement consumer to each removed element.
+    ///
+    /// @param  c           java.util.Collection<? extends T>
+    /// @param  onElement   java.util.function.Consumer<? super T>
+    /// @param  onEnd       java.lang.Runnable
+    /// @return             boolean
+    public boolean removeAllAndApply(final Collection<? extends T> c,
+                                     final Consumer<? super T> onElement,
+                                     final Runnable onEnd) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(c, onElement, onEnd));
+        }
+
+        final boolean result = super.removeAllAndApply(this.list, c, onElement, onEnd);
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Removes the element into the list if the
+    /// applied predicate function evaluates to true.
+    ///
+    /// @param  t       T
+    /// @param  filter  java.util.function.Predicate<? super T>
+    /// @return         boolean
+    public boolean removeIf(final T t, final Predicate<? super T> filter) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(t, filter));
+        }
+
+        final boolean result = super.removeIf(t, this.list, filter);
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Removes the first occurrence of this element from the list if one exists
+    /// and the applied predicate function evaluates to true.
+    /// Apply the consumer to the removed element if it is not null.
+    ///
+    /// @param  object      T
+    /// @param  matcher     java.util.function.Predicate<? super T>
+    /// @param  consumer    java.util.function.Consumer<? super T>
+    /// @return             boolean
+    public boolean removeIfAndApply(final T object,
+                                    final Predicate<? super T> matcher,
+                                    final Consumer<? super T> consumer) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(object, matcher, consumer));
+        }
+
+        final int index = this.list.indexOf(object);
+
+        boolean result = false;
+
+        if (index >= 0) {
+            final T element = this.list.get(index);
+
+            if (matcher.test(element)) {
+                result = this.list.remove(element);
+
+                if (element != null) {
+                    super.runTask(() -> consumer.accept(element));
+                }
+            }
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Removes the element at the indexed position from the list if
+    /// the applied predicate function evaluates to true.
+    /// Apply the consumer to the removed element if it is not null.
+    ///
+    /// @param  index       int
+    /// @param  matcher     java.util.function.Predicate<? super T>
+    /// @param  consumer    java.util.function.Consumer<? super T>
+    /// @return             T
+    public T removeIfAndApply(final int index,
+                              final Predicate<? super T> matcher,
+                              final Consumer<? super T> consumer) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(index, matcher, consumer));
+        }
+
+        T result = null;
+
+        final T element = this.list.get(index);
+
+        if (matcher.test(element)) {
+            this.list.remove(index);
+
+            result = element;
+
+            if (element != null) {
+                super.runTask(() -> consumer.accept(element));
+            }
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Retains only the elements in this list that are contained
+    /// in the specified collection (optional operation). In other
+    /// words, removes from this list all of its elements that are
+    /// not contained in the specified collection. After this call
+    /// returns, this collection will contain only elements in common
+    /// with the specified collection.
+    /// Apply the onElement consumer to each retained element.
+    ///
+    /// @param  c           java.util.Collection<? extends T>
+    /// @param  onElement   java.util.function.Consumer<? super T>
+    /// @param  onEnd       java.lang.Runnable
+    /// @return             boolean
+    public boolean retainAllAndApply(final Collection<? extends T> c,
+                                     final Consumer<? super T> onElement,
+                                     final Runnable onEnd) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(c, onElement, onEnd));
+        }
+
+        final boolean result = super.retainAllAndApply(this.list, c, onElement, onEnd);
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /* List method overrides */
+
+    /// Returns an array containing all the elements in this list
+    /// in proper sequence (from first to last element).
+    ///
+    /// @return java.lang.Object[]
+    @Override
+    public Object[] toArray() {
+        return this.list.toArray();
+    }
+
+    /// Returns an array containing all the elements in this list in
+    /// proper sequence (from first to last element); the runtime type
+    /// of the returned array is that of the specified array.
+    ///
+    /// @param  <U> The component type of the array to contain the collection
+    /// @param  a   U[]
+    /// @return     U[]
+    @Override
+    public <U> U[] toArray(U[] a) {
+        return this.list.toArray(a);
+    }
+
+    /// Returns the number of elements in this list.
+    ///
+    /// @return int
+    @Override
+    public int size() {
+        return this.list.size();
+    }
+
+    /// Returns true if this list contains no elements.
+    ///
+    /// @return boolean
+    @Override
+    public boolean isEmpty() {
+        return this.list.isEmpty();
+    }
+
+    /// Returns an iterator over the elements in this list in proper sequence.
+    ///
+    /// @return java.util.Iterator<T>
+    @Override
+    public Iterator<T> iterator() {
+        return this.list.iterator();
+    }
+
+    /// Returns true if this list contains the specified element.
+    ///
+    /// @param  o   java.lang.Object
+    /// @return     boolean
+    @Override
+    public boolean contains(Object o) {
+        return this.list.contains(o);
+    }
+
+    /// Appends the specified element to the end of this list (optional operation).
+    ///
+    /// @param  t   T
+    /// @return     boolean
+    @Override
+    public boolean add(T t) {
+        return this.list.add(t);
+    }
+
+    /// Removes the first occurrence of the specified element from this list,
+    /// if it is present (optional operation).
+    ///
+    /// @param  o   java.lang.Object
+    /// @return     boolean
+    @Override
+    public boolean remove(Object o) {
+        return this.list.remove(o);
+    }
+
+    /// Returns true if this list contains all of the elements of the specified collection.
+    ///
+    /// @param  c   java.util.Collection<?>
+    /// @return     boolean
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return this.list.containsAll(c);
+    }
+
+    /// Appends all the elements in the specified collection to the end of this list,
+    /// in the order that they are returned by the specified collection's iterator
+    /// (optional operation).
+    ///
+    /// @param  c   java.util.Collection<? extends T>
+    /// @return     boolean
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        return this.list.addAll(c);
+    }
+
+    /// Inserts all the elements in the specified collection into this
+    /// list at the specified position (optional operation).
+    ///
+    /// @param  index   int
+    /// @param  c       java.util.Collection<? extends T>
+    /// @return         boolean
+    @Override
+    public boolean addAll(int index, Collection<? extends T> c) {
+        return this.list.addAll(index, c);
+    }
+
+    /// Removes from this list all of its elements that are contained in
+    /// the specified collection (optional operation).
+    ///
+    /// @param  c   java.util.Collection<?>
+    /// @return     boolean
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return this.list.removeAll(c);
+    }
+
+    /// Retains only the elements in this list that are contained in the
+    /// specified collection (optional operation).
+    ///
+    /// @param  c   java.util.Collection<?>
+    /// @return     boolean
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return this.list.retainAll(c);
+    }
+
+    /// Removes all of the elements from this list (optional operation).
+    @Override
+    public void clear() {
+        this.list.clear();
+    }
+
+    /// Returns the element at the specified position in this list.
+    ///
+    /// @param  index   int
+    /// @return         T
+    @Override
+    public T get(int index) {
+        return this.list.get(index);
+    }
+
+    /// Replaces the element at the specified position in this list
+    /// with the specified element (optional operation).
+    ///
+    /// @param  index   int
+    /// @param  element T
+    /// @return         T
+    @Override
+    public T set(int index, T element) {
+        return this.list.set(index, element);
+    }
+
+    /// Inserts the specified element at the specified position
+    /// in this list (optional operation).
+    ///
+    /// @param  index   int
+    /// @param  element T
+    @Override
+    public void add(int index, T element) {
+        throw new UnsupportedOperationException();
+    }
+
+    /// Removes the element at the specified position in this list (optional operation).
+    ///
+    /// @param  index   int
+    /// @return         T
+    @Override
+    public T remove(int index) {
+        return this.list.remove(index);
+    }
+
+    /// Returns the index of the first occurrence of the specified
+    /// element in this list, or -1 if this list does not contain the element.
+    ///
+    /// @param  o   java.lang.Object
+    /// @return     int
+    @Override
+    public int indexOf(Object o) {
+        return this.list.indexOf(o);
+    }
+
+    /// Returns the index of the last occurrence of the specified element
+    /// in this list, or -1 if this list does not contain the element.
+    ///
+    /// @param  o   java.lang.Object
+    /// @return     int
+    @Override
+    public int lastIndexOf(Object o) {
+        return this.list.lastIndexOf(o);
+    }
+
+    /// Returns a list iterator over the elements in this list (in proper sequence).
+    ///
+    /// @return java.util.ListIterator<T>
+    @Override
+    public ListIterator<T> listIterator() {
+        return this.list.listIterator();
+    }
+
+    /// Returns a list iterator over the elements in this list (in proper sequence),
+    /// starting at the specified position in the list.
+    ///
+    /// @return java.util.ListIterator<T>
+    @Override
+    public ListIterator<T> listIterator(int index) {
+        return this.list.listIterator(index);
+    }
+
+    /// Returns a view of the portion of this list between the specified fromIndex,
+    /// inclusive, and toIndex, exclusive.
+    ///
+    /// @param  fromIndex   int
+    /// @param  toIndex     int
+    /// @return             java.util.List<T>
+    @Override
+    public List<T> subList(int fromIndex, int toIndex) {
+        throw new UnsupportedOperationException();
+    }
+}

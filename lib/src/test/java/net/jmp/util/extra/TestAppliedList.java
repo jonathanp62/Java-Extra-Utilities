@@ -1,9 +1,7 @@
+package net.jmp.util.extra;
+
 /*
- * (#)module-info.java  1.2.0   09/27/2024
- * (#)module-info.java  1.1.0   09/27/2024
- * (#)module-info.java  1.0.0   09/25/2024
- *
- * @version  1.2.0
+ * (#)TestAppliedList.java  1.2.0   09/27/2024
  *
  * MIT License
  *
@@ -28,15 +26,9 @@
  * SOFTWARE.
  */
 
-/// The extra utilities library module.
+/// A test class for AppliedList.
 ///
-/// @since  1.0.0
-module extra.utilities {
-    requires java.base;
-
-    requires com.google.common;
-    requires logging.utilities;
-    requires org.slf4j;
-
-    exports net.jmp.util.extra;
+/// @version    1.2.0
+/// @since      1.2.0
+public final class TestAppliedList {
 }
