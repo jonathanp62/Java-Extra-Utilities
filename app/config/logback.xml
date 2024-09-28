@@ -44,6 +44,9 @@
     <logger name="net.jmp.util.extra.AppliedList" additivity="false" level="warn">
         <appender-ref ref="MAIN" />
     </logger>
+    <logger name="net.jmp.util.extra.AppliedQueue" additivity="false" level="warn">
+        <appender-ref ref="MAIN" />
+    </logger>
     <logger name="net.jmp.util.extra.KeyedFunctionExecutor" additivity="false" level="warn">
         <appender-ref ref="MAIN" />
     </logger>

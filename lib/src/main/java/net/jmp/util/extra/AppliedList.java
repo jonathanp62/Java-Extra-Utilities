@@ -586,7 +586,7 @@ public final class AppliedList<T> extends AppliedBaseCollection<T> implements Li
         return this.list.retainAll(c);
     }
 
-    /// Removes all of the elements from this list (optional operation).
+    /// Removes all the elements from this list (optional operation).
     @Override
     public void clear() {
         this.list.clear();
