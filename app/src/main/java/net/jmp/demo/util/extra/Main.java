@@ -1,6 +1,7 @@
 package net.jmp.demo.util.extra;
 
 /*
+ * (#)Main.java 1.2.0   09/28/2024
  * (#)Main.java 1.1.0   09/27/2024
  * (#)Main.java 1.0.0   09/26/2024
  *
@@ -27,6 +28,7 @@ package net.jmp.demo.util.extra;
  * SOFTWARE.
  */
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import java.util.stream.Stream;
@@ -44,7 +46,7 @@ import org.slf4j.LoggerFactory;
 /// and run from the bootstrap class when the
 /// application starts.
 ///
-/// @version    1.1.0
+/// @version    1.2.0
 /// @since      1.0.0
 final class Main implements Runnable {
     /// The logger.
@@ -71,16 +73,41 @@ final class Main implements Runnable {
             this.logger.trace(entry());
         }
 
-        if (this.logger.isInfoEnabled() || this.logger.isWarnEnabled() || this.logger.isErrorEnabled()) {
-            System.out.format("%s %s%n", Name.NAME_STRING, Version.VERSION_STRING);
-        } else {
-            this.logger.debug("{} {}", Name.NAME_STRING, Version.VERSION_STRING);
-        }
+        this.greeting();
 
         Stream.of(
                 new WrappedObjectDemo(),
                 new KeyedFunctionExecutorDemo()
         ).forEach(Demo::demo);
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
+    }
+
+    /// Log the greeting.
+    private void greeting() {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
+        if (this.arguments.length == 0) {
+            if (this.logger.isDebugEnabled()) { // Covers trace, too
+                this.logger.debug("{} {}", Name.NAME_STRING, Version.VERSION_STRING);
+            } else if (this.logger.isInfoEnabled() || this.logger.isWarnEnabled()) {
+                this.logger.info("{} {}", Name.NAME_STRING, Version.VERSION_STRING);
+            } else {    // Error or off
+                System.out.format("%s %s%n", Name.NAME_STRING, Version.VERSION_STRING);
+            }
+        } else {
+            if (this.logger.isDebugEnabled()) { // Covers trace, too
+                this.logger.debug("{} {}: {}", Name.NAME_STRING, Version.VERSION_STRING, this.arguments);
+            } else if (this.logger.isInfoEnabled() || this.logger.isWarnEnabled()) {
+                this.logger.info("{} {}: {}", Name.NAME_STRING, Version.VERSION_STRING, this.arguments);
+            } else {    // Error or off
+                System.out.format("%s %s: %s%n", Name.NAME_STRING, Version.VERSION_STRING, Arrays.toString(this.arguments));
+            }
+        }
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exit());
