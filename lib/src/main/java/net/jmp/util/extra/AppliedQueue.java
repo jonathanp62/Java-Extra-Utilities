@@ -46,6 +46,8 @@ import org.slf4j.LoggerFactory;
 /// An applied queue.
 ///
 /// @param  <T> The type of element
+/// @version    1.2.0
+/// @since      1.2.0
 public class AppliedQueue<T> extends AppliedBaseCollection<T> implements Queue<T>, AutoCloseable {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
