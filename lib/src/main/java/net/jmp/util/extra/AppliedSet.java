@@ -66,7 +66,7 @@ public class AppliedSet<T> extends AppliedBaseCollection<T> implements Set<T>, A
         this.set = new HashSet<>();
     }
 
-    /// A constructor that takes a list
+    /// A constructor that takes a set
     /// and creates an unmodifiable object.
     ///
     /// @param  set java.util.Set<? extends T>
@@ -228,7 +228,7 @@ public class AppliedSet<T> extends AppliedBaseCollection<T> implements Set<T>, A
     }
 
     /// Apply the onElement to each element
-    /// and then clear the list.
+    /// and then clear the set.
     ///
     /// @param  onElement   java.util.function.Consumer<? super T>
     /// @param  onEnd       java.lang.Runnable
@@ -387,68 +387,123 @@ public class AppliedSet<T> extends AppliedBaseCollection<T> implements Set<T>, A
         return result;
     }
 
-    /* Set and Collection method overrides */
+    /* Set method overrides */
 
+    /// Returns the number of elements in this set.
+    ///
+    /// @return int
     @Override
     public int size() {
         return this.set.size();
     }
 
+    /// Returns true if this set contains no elements.
+    ///
+    /// @return boolean
     @Override
     public boolean isEmpty() {
         return this.set.isEmpty();
     }
 
+    /// Returns true if this set contains the specified element.
+    ///
+    /// @param  o   java.lang.Object
+    /// @return     boolean
     @Override
     public boolean contains(Object o) {
         return this.set.contains(o);
     }
 
+    /// Returns an iterator over the elements in this set.
+    ///
+    /// @return java.util.Iterator<T>
     @Override
     public Iterator<T> iterator() {
         return this.set.iterator();
     }
 
+    /// Returns an array containing all the elements in this set
+    /// in proper sequence (from first to last element).
+    ///
+    /// @return java.lang.Object[]
     @Override
     public Object[] toArray() {
         return this.set.toArray();
     }
 
+    /// Returns an array containing all the elements in this set in
+    /// proper sequence (from first to last element); the runtime type
+    /// of the returned array is that of the specified array.
+    ///
+    /// @param  <U> The component type of the array to contain the collection
+    /// @param  a   U[]
+    /// @return     U[]
     @Override
-    public <T1> T1[] toArray(T1[] a) {
+    public <U> U[] toArray(U[] a) {
         return this.set.toArray(a);
     }
 
+    /// Appends the specified element to the end
+    /// of this set if it is not already present (optional operation).
+    ///
+    /// @param  t   T
+    /// @return     boolean
     @Override
     public boolean add(T t) {
         return this.set.add(t);
     }
 
+    /// Removes the first occurrence of the specified element from this set,
+    /// if it is present (optional operation).
+    ///
+    /// @param  o   java.lang.Object
+    /// @return     boolean
     @Override
     public boolean remove(Object o) {
         return this.set.remove(o);
     }
 
+    /// Returns true if this set contains all the elements of the specified collection.
+    ///
+    /// @param  c   java.util.Collection<?>
+    /// @return     boolean
     @Override
     public boolean containsAll(Collection<?> c) {
         return this.set.containsAll(c);
     }
 
+    /// Appends all the elements in the specified collection to the end of this set,
+    /// in the order that they are returned by the specified collection's iterator
+    /// (optional operation).
+    ///
+    /// @param  c   java.util.Collection<? extends T>
+    /// @return     boolean
     @Override
     public boolean addAll(Collection<? extends T> c) {
         return this.set.addAll(c);
     }
 
+    /// Retains only the elements in this set that are contained in the
+    /// specified collection (optional operation).
+    ///
+    /// @param  c   java.util.Collection<?>
+    /// @return     boolean
     @Override
     public boolean retainAll(Collection<?> c) {
         return this.set.retainAll(c);
     }
 
+    /// Removes from this set all of its elements that are contained in
+    /// the specified collection (optional operation).
+    ///
+    /// @param  c   java.util.Collection<?>
+    /// @return     boolean
     @Override
     public boolean removeAll(Collection<?> c) {
         return this.set.removeAll(c);
     }
 
+    /// Removes all the elements from this set (optional operation).
     @Override
     public void clear() {
         this.set.clear();

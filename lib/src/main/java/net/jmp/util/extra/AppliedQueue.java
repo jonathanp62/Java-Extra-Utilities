@@ -624,7 +624,7 @@ public class AppliedQueue<T> extends AppliedBaseCollection<T> implements Queue<T
         return this.queue.remove(o);
     }
 
-    /// Returns true if this queue contains all of the elements of the specified collection.
+    /// Returns true if this queue contains all the elements of the specified collection.
     ///
     /// @param  c   java.util.Collection<?>
     /// @return     boolean

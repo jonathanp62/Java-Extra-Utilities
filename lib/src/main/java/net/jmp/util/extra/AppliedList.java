@@ -535,7 +535,7 @@ public final class AppliedList<T> extends AppliedBaseCollection<T> implements Li
         return this.list.remove(o);
     }
 
-    /// Returns true if this list contains all of the elements of the specified collection.
+    /// Returns true if this list contains all the elements of the specified collection.
     ///
     /// @param  c   java.util.Collection<?>
     /// @return     boolean
