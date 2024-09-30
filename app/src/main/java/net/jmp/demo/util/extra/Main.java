@@ -33,6 +33,7 @@ import java.util.Objects;
 
 import java.util.stream.Stream;
 
+import net.jmp.demo.util.extra.demos.AppliedCollectionsDemo;
 import net.jmp.demo.util.extra.demos.Demo;
 import net.jmp.demo.util.extra.demos.KeyedFunctionExecutorDemo;
 import net.jmp.demo.util.extra.demos.WrappedObjectDemo;
@@ -77,7 +78,8 @@ final class Main implements Runnable {
 
         Stream.of(
                 new WrappedObjectDemo(),
-                new KeyedFunctionExecutorDemo()
+                new KeyedFunctionExecutorDemo(),
+                new AppliedCollectionsDemo()
         ).forEach(Demo::demo);
 
         if (this.logger.isTraceEnabled()) {

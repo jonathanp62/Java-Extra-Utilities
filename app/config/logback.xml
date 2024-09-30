@@ -56,6 +56,9 @@
     <logger name="net.jmp.demo.util.extra.Main" additivity="false" level="info">
         <appender-ref ref="MAIN" />
     </logger>
+    <logger name="net.jmp.demo.util.extra.demos.AppliedCollectionsDemo" additivity="false" level="info">
+        <appender-ref ref="MAIN" />
+    </logger>
     <logger name="net.jmp.demo.util.extra.demos.KeyedFunctionExecutorDemo" additivity="false" level="info">
         <appender-ref ref="MAIN" />
     </logger>

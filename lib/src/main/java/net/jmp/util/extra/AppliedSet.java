@@ -291,6 +291,7 @@ public class AppliedSet<T> extends AppliedBaseCollection<T> implements Set<T>, A
     ///
     /// @param  c           java.util.Collection<? extends T>
     /// @param  onElement   java.util.function.Consumer<? super T>
+    /// @param  onEnd       java.lang.Runnable
     /// @return             boolean
     public boolean removeAllAndApply(final Collection<? extends T> c,
                                      final Consumer<? super T> onElement,
@@ -370,6 +371,7 @@ public class AppliedSet<T> extends AppliedBaseCollection<T> implements Set<T>, A
     ///
     /// @param  c           java.util.Collection<? extends T>
     /// @param  onElement   java.util.function.Consumer<? super T>
+    /// @param  onEnd       java.lang.Runnable
     /// @return             boolean
     public boolean retainAllAndApply(final Collection<? extends T> c,
                                      final Consumer<? super T> onElement,
