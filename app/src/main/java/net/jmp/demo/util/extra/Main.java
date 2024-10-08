@@ -1,6 +1,7 @@
 package net.jmp.demo.util.extra;
 
 /*
+ * (#)Main.java 1.3.0   10/08/2024
  * (#)Main.java 1.2.0   09/28/2024
  * (#)Main.java 1.1.0   09/27/2024
  * (#)Main.java 1.0.0   09/26/2024
@@ -33,10 +34,7 @@ import java.util.Objects;
 
 import java.util.stream.Stream;
 
-import net.jmp.demo.util.extra.demos.AppliedCollectionsDemo;
-import net.jmp.demo.util.extra.demos.Demo;
-import net.jmp.demo.util.extra.demos.KeyedFunctionExecutorDemo;
-import net.jmp.demo.util.extra.demos.WrappedObjectDemo;
+import net.jmp.demo.util.extra.demos.*;
 
 import static net.jmp.util.logging.LoggerUtils.*;
 
@@ -47,7 +45,7 @@ import org.slf4j.LoggerFactory;
 /// and run from the bootstrap class when the
 /// application starts.
 ///
-/// @version    1.2.0
+/// @version    1.3.0
 /// @since      1.0.0
 final class Main implements Runnable {
     /// The logger.
@@ -79,7 +77,8 @@ final class Main implements Runnable {
         Stream.of(
                 new WrappedObjectDemo(),
                 new KeyedFunctionExecutorDemo(),
-                new AppliedCollectionsDemo()
+                new AppliedCollectionsDemo(),
+                new DateUtilsDemo()
         ).forEach(Demo::demo);
 
         if (this.logger.isTraceEnabled()) {

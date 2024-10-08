@@ -3,10 +3,6 @@ package net.jmp.util.extra;
 /*
  * (#)KeyedFunctionExecutor.java    1.1.0   09/26/2024
  *
- * @author   Jonathan Parker
- * @version  1.1.0
- * @since    1.1.0
- *
  * MIT License
  *
  * Copyright (c) 2024 Jonathan M. Parker
@@ -52,6 +48,8 @@ import org.slf4j.LoggerFactory;
 /// The keyed function executor.
 ///
 /// @param  <T> The type of value
+/// @version    1.1.0
+/// @since      1.1.0
 public final class KeyedFunctionExecutor<T> implements AutoCloseable {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
