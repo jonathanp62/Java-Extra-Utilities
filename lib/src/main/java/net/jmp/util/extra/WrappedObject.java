@@ -1,6 +1,7 @@
 package net.jmp.util.extra;
 
 /*
+ * (#)WrappedObject.java    1.3.1   10/08/2024
  * (#)WrappedObject.java    1.0.0   09/25/2024
  *
  * MIT License
@@ -33,7 +34,7 @@ import java.util.Objects;
 /// a lambda.
 ///
 /// @param  <T> The type of object to wrap
-/// @version    1.0.0
+/// @version    1.3.1
 /// @since      1.0.0
 public final class WrappedObject<T> {
     /// Object is null message text.
@@ -77,5 +78,41 @@ public final class WrappedObject<T> {
     /// @return T
     public T get() {
         return this.object;
+    }
+
+    /// The equals method.
+    ///
+    /// @param  o   java.lang.Object
+    /// @return     boolean
+    /// @since  1.3.1
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final WrappedObject<?> that = (WrappedObject<?>) o;
+
+        return Objects.equals(this.object, that.object);
+    }
+
+    /// The hash-code method.
+    ///
+    /// @return int
+    /// @since  1.3.1
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(object);
+    }
+
+    /// The to-string method.
+    ///
+    /// @return java.lang.String
+    /// @since  1.3.1
+    @Override
+    public String toString() {
+        return "WrappedObject{" +
+                "object=" + this.object +
+                '}';
     }
 }
