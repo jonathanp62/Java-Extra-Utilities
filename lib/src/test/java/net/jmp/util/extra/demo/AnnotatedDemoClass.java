@@ -26,10 +26,11 @@ package net.jmp.util.extra.demo;
  * SOFTWARE.
  */
 
-/// A demo class.
+/// A demo class with both annotations..
 ///
 /// @version    1.4.0
 /// @since      1.4.0
+@DemoClass
 @DemoVersion(value = 1.4)
 public final class AnnotatedDemoClass {
     /// The default constructor.

@@ -1,7 +1,7 @@
 package net.jmp.util.extra.demo;
 
 /*
- * (#)UnannotatedDemoClass.java 1.4.0   10/18/2024
+ * (#)DemoClass.java    1.4.0   10/18/2024
  *
  * MIT License
  *
@@ -26,13 +26,13 @@ package net.jmp.util.extra.demo;
  * SOFTWARE.
  */
 
-/// A demo class without annotations.
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+/// The version annotation.
 ///
 /// @version    1.4.0
 /// @since      1.4.0
-public final class UnannotatedDemoClass {
-    /// The default constructor.
-    public UnannotatedDemoClass() {
-        super();
-    }
+@Retention(value = RetentionPolicy.RUNTIME)
+public @interface DemoClass {
 }

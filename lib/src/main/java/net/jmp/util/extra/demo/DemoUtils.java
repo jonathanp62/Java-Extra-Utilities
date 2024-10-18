@@ -65,7 +65,7 @@ public final class DemoUtils {
         try {
             final Class<?> clazz = Class.forName(className);
 
-            if (clazz.isAnnotationPresent(DemoVersion.class)) {
+            if (clazz.isAnnotationPresent(DemoClass.class) && clazz.isAnnotationPresent(DemoVersion.class)) {
                 final var versionAnnotation = clazz.getAnnotation(DemoVersion.class);
 
                 version = versionAnnotation.value();
@@ -104,13 +104,16 @@ public final class DemoUtils {
 
         try {
             final Class<?> clazz = Class.forName(className);
-            final Object instance = clazz.getDeclaredConstructor().newInstance();
-            final Method method = clazz.getDeclaredMethod(methodName);
 
-            if (returnType.equals(Void.class)) {
-                method.invoke(instance);
-            } else {
-                result = (T) method.invoke(instance);
+            if (clazz.isAnnotationPresent(DemoClass.class)) {
+                final Object instance = clazz.getDeclaredConstructor().newInstance();
+                final Method method = clazz.getDeclaredMethod(methodName);
+
+                if (returnType.equals(Void.class)) {
+                    method.invoke(instance);
+                } else {
+                    result = (T) method.invoke(instance);
+                }
             }
         } catch (final ClassNotFoundException | InstantiationException | IllegalAccessException |
                        NoSuchMethodException | InvocationTargetException e) {

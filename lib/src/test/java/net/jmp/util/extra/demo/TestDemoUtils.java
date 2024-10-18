@@ -43,6 +43,13 @@ public final class TestDemoUtils {
     }
 
     @Test
+    public void testGetDemoClassVersionFromVersionlessClass() throws DemoUtilException {
+        final double version = DemoUtils.getDemoClassVersion("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass");
+
+        assertEquals(0, version, 0.01);
+    }
+
+    @Test
     public void testGetDemoClassVersionFromUnannotatedClass() throws DemoUtilException {
         final double version = DemoUtils.getDemoClassVersion("net.jmp.util.extra.demo.UnannotatedDemoClass");
 
@@ -55,13 +62,33 @@ public final class TestDemoUtils {
     }
 
     @Test
-    public void testRunDemoClassVoidMethod() throws DemoUtilException {
+    public void testRunDemoClassVoidMethod1() throws DemoUtilException {
         DemoUtils.runDemoClassMethod("net.jmp.util.extra.demo.AnnotatedDemoClass", "someVoidMethod", Void.class);
+
+        final var result = DemoUtils.runDemoClassMethod("net.jmp.util.extra.demo.AnnotatedDemoClass", "someVoidMethod", Void.class);
+
+        assertNull(result);
     }
 
     @Test
-    public void testRunDemoClassStringMethod() throws DemoUtilException {
+    public void testRunDemoClassStringMethod1() throws DemoUtilException {
         final String value = DemoUtils.runDemoClassMethod("net.jmp.util.extra.demo.AnnotatedDemoClass", "someStringMethod", String.class);
+
+        assertEquals("Some string", value);
+    }
+
+    @Test
+    public void testRunDemoClassVoidMethod2() throws DemoUtilException {
+        DemoUtils.runDemoClassMethod("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass", "someVoidMethod", Void.class);
+
+        final var result = DemoUtils.runDemoClassMethod("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass", "someVoidMethod", Void.class);
+
+        assertNull(result);
+    }
+
+    @Test
+    public void testRunDemoClassStringMethod2() throws DemoUtilException {
+        final String value = DemoUtils.runDemoClassMethod("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass", "someStringMethod", String.class);
 
         assertEquals("Some string", value);
     }

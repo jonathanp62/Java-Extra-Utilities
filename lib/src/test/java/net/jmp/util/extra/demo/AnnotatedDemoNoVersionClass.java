@@ -1,7 +1,7 @@
 package net.jmp.util.extra.demo;
 
 /*
- * (#)UnannotatedDemoClass.java 1.4.0   10/18/2024
+ * (#)AnnotatedDemoNoVersionClass.java   1.4.0   10/18/2024
  *
  * MIT License
  *
@@ -26,13 +26,28 @@ package net.jmp.util.extra.demo;
  * SOFTWARE.
  */
 
-/// A demo class without annotations.
+/// A demo class that is annotated but not versioned.
 ///
 /// @version    1.4.0
 /// @since      1.4.0
-public final class UnannotatedDemoClass {
+@DemoClass
+public final class AnnotatedDemoNoVersionClass {
     /// The default constructor.
-    public UnannotatedDemoClass() {
+    AnnotatedDemoNoVersionClass() {
         super();
+    }
+
+    /// A method that returns nothing.
+    public void someVoidMethod() {
+        System.out.println("Method 'someVoidMethod' called");
+    }
+
+    /// A method that returns a string.
+    ///
+    /// @return java.lang.String
+    public String someStringMethod() {
+        System.out.println("Method 'someStringMethod' called");
+
+        return "Some string";
     }
 }
