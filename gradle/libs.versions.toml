@@ -1,11 +1,12 @@
 #
+# (#)libs.versions.toml 1.4.0   10/18/2024
 # (#)libs.versions.toml 1.3.1   10/08/2024
 # (#)libs.versions.toml 1.3.0   10/08/2024
 # (#)libs.versions.toml 1.2.0   09/27/2024
 # (#)libs.versions.toml 1.1.0   09/26/2024
 # (#)libs.versions.toml 1.0.0   09/25/2024
 #
-#  @version  1.3.1
+#  @version  1.4.0
 #  @since    1.0.0
 #
 #  MIT License
@@ -35,7 +36,7 @@ ch-qos-logback-logback-classic = "1.5.8"
 ch-qos-logback-logback-core = "1.5.8"
 com-google-guava-guava = "33.2.1-jre"
 junit-junit = "4.13.2"
-net-jmp-util-extra-extra-utilities = "1.3.1"
+net-jmp-util-extra-extra-utilities = "1.4.0"
 net-jmp-util-logging-logging-utilities = "1.1.0"
 net-jmp-util-testing-testutil-testing-utilities = "1.0.0"
 org-assertj-assertj-core = "3.26.3"

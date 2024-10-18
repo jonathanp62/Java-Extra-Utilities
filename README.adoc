@@ -13,6 +13,8 @@ Library Classes
   - dateToString
   - dateFromString
 * DemoUtils
+  - getDemoClassVersion
+  - runDemoClassMethod
 * KeyedFunctionExecutor
 * WrappedObject
 
