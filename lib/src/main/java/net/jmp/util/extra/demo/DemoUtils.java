@@ -91,6 +91,7 @@ public final class DemoUtils {
     /// @param  <T>         The type of return value
     /// @param  className   java.lang.String
     /// @param  methodName  java.lang.String
+    /// @param  returnType  java.lang.Class<T>
     /// @return             T
     /// @throws             net.jmp.util.extra.demo.DemoUtilException   When an exception occurs running the method in the class
     @SuppressWarnings("unchecked")
