@@ -41,7 +41,7 @@ import net.jmp.util.extra.AppliedList;
 import net.jmp.util.extra.AppliedQueue;
 import net.jmp.util.extra.AppliedSet;
 
-import net.jmp.util.extra.demo.Demo;
+import net.jmp.util.extra.demo.*;
 
 import static net.jmp.util.logging.LoggerUtils.*;
 
@@ -52,6 +52,8 @@ import org.slf4j.LoggerFactory;
 ///
 /// @version    1.4.0
 /// @since      1.2.0
+@DemoClass
+@DemoVersion(1.2)
 public final class AppliedCollectionsDemo implements Demo {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());

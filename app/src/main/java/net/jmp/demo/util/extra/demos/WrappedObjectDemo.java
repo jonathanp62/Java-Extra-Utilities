@@ -29,7 +29,7 @@ package net.jmp.demo.util.extra.demos;
 
 import net.jmp.util.extra.WrappedObject;
 
-import net.jmp.util.extra.demo.Demo;
+import net.jmp.util.extra.demo.*;
 
 import static net.jmp.util.logging.LoggerUtils.*;
 
@@ -40,6 +40,8 @@ import org.slf4j.LoggerFactory;
 ///
 /// @version    1.4.0
 /// @since      1.0.0
+@DemoClass
+@DemoVersion(1.0)
 public final class WrappedObjectDemo implements Demo {
     /// The logger.
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
