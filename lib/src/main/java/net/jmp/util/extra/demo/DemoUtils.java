@@ -179,6 +179,7 @@ public final class DemoUtils {
     /// implements the Demo interface.
     ///
     /// @param  clazz   java.lang.Class<?>
+    /// @return         boolean
     private static boolean isDemoClass(final Class<?> clazz) {
         if (LOGGER.isTraceEnabled()) {
             LOGGER.trace(entryWith(clazz));
