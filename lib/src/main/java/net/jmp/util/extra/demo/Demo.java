@@ -1,7 +1,7 @@
 package net.jmp.util.extra.demo;
 
 /*
- * (#)AnnotatedDemoClass.java   1.4.0   10/18/2024
+ * (#)Demo.java 1.4.0   10/19/2024
  *
  * MIT License
  *
@@ -26,35 +26,12 @@ package net.jmp.util.extra.demo;
  * SOFTWARE.
  */
 
-/// A demo class with both annotations..
+/// The demo interface.
 ///
 /// @version    1.4.0
 /// @since      1.4.0
-@DemoClass
-@DemoVersion(value = 1.4)
-public final class AnnotatedDemoClass implements Demo {
-    /// The default constructor.
-    public AnnotatedDemoClass() {
-        super();
-    }
-
+@FunctionalInterface
+public interface Demo {
     /// The demo method.
-    @Override
-    public void demo() {
-        System.out.println("Method 'demo' called");
-    }
-
-    /// A method that returns nothing.
-    public void someVoidMethod() {
-        System.out.println("Method 'someVoidMethod' called");
-    }
-
-    /// A method that returns a string.
-    ///
-    /// @return java.lang.String
-    public String someStringMethod() {
-        System.out.println("Method 'someStringMethod' called");
-
-        return "Some string";
-    }
+    public void demo();
 }

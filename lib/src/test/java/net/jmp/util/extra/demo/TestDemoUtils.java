@@ -71,6 +71,15 @@ public final class TestDemoUtils {
     }
 
     @Test
+    public void testRunDemoClassDemo1() throws DemoUtilException {
+        DemoUtils.runDemoClassDemo("net.jmp.util.extra.demo.AnnotatedDemoClass", Void.class);
+
+        final var result = DemoUtils.runDemoClassDemo("net.jmp.util.extra.demo.AnnotatedDemoClass", Void.class);
+
+        assertNull(result);
+    }
+
+    @Test
     public void testRunDemoClassStringMethod1() throws DemoUtilException {
         final String value = DemoUtils.runDemoClassMethod("net.jmp.util.extra.demo.AnnotatedDemoClass", "someStringMethod", String.class);
 
@@ -82,6 +91,15 @@ public final class TestDemoUtils {
         DemoUtils.runDemoClassMethod("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass", "someVoidMethod", Void.class);
 
         final var result = DemoUtils.runDemoClassMethod("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass", "someVoidMethod", Void.class);
+
+        assertNull(result);
+    }
+
+    @Test
+    public void testRunDemoClassDemo2() throws DemoUtilException {
+        DemoUtils.runDemoClassDemo("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass", Void.class);
+
+        final var result = DemoUtils.runDemoClassDemo("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass", Void.class);
 
         assertNull(result);
     }

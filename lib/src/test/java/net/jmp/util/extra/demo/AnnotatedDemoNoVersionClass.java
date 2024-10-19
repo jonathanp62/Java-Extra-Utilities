@@ -31,10 +31,16 @@ package net.jmp.util.extra.demo;
 /// @version    1.4.0
 /// @since      1.4.0
 @DemoClass
-public final class AnnotatedDemoNoVersionClass {
+public final class AnnotatedDemoNoVersionClass implements Demo {
     /// The default constructor.
     AnnotatedDemoNoVersionClass() {
         super();
+    }
+
+    /// The demo method.
+    @Override
+    public void demo() {
+        System.out.println("Method 'demo' called");
     }
 
     /// A method that returns nothing.

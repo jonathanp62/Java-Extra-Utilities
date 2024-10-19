@@ -65,13 +65,29 @@ public final class DemoUtils {
         try {
             final Class<?> clazz = Class.forName(className);
 
-            if (clazz.isAnnotationPresent(DemoClass.class) && clazz.isAnnotationPresent(DemoVersion.class)) {
-                final var versionAnnotation = clazz.getAnnotation(DemoVersion.class);
+            if (isDemoClass(clazz)) {
+                if (clazz.isAnnotationPresent(DemoClass.class)) {
+                    if (clazz.isAnnotationPresent(DemoVersion.class)) {
+                        final var versionAnnotation = clazz.getAnnotation(DemoVersion.class);
 
-                version = versionAnnotation.value();
+                        version = versionAnnotation.value();
 
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Class {} is annotated with @Version({})", clazz.getSimpleName(), version);
+                        }
+                    } else {
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Class {} is not annotated with {}", clazz.getSimpleName(), DemoVersion.class.getName());
+                        }
+                    }
+                } else {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Class {} is not annotated with {}", clazz.getSimpleName(), DemoClass.class.getName());
+                    }
+                }
+            } else {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Class {} annotated with @Version({})", clazz.getSimpleName(), version);
+                    LOGGER.debug("Class {} does not implement {}", clazz.getSimpleName(), Demo.class.getName());
                 }
             }
         } catch (final ClassNotFoundException cnfe) {
@@ -105,20 +121,79 @@ public final class DemoUtils {
         try {
             final Class<?> clazz = Class.forName(className);
 
-            if (clazz.isAnnotationPresent(DemoClass.class)) {
-                final Object instance = clazz.getDeclaredConstructor().newInstance();
-                final Method method = clazz.getDeclaredMethod(methodName);
+            if (isDemoClass(clazz)) {
+                if (clazz.isAnnotationPresent(DemoClass.class)) {
+                    final Object instance = clazz.getDeclaredConstructor().newInstance();
+                    final Method method = clazz.getDeclaredMethod(methodName);
 
-                if (returnType.equals(Void.class)) {
-                    method.invoke(instance);
+                    if (returnType.equals(Void.class)) {
+                        method.invoke(instance);
+                    } else {
+                        result = (T) method.invoke(instance);
+                    }
                 } else {
-                    result = (T) method.invoke(instance);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Class {} is not annotated with {}", clazz.getSimpleName(), DemoClass.class.getName());
+                    }
+                }
+            } else {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Class {} does not implement {}", clazz.getSimpleName(), Demo.class.getName());
                 }
             }
         } catch (final ClassNotFoundException | InstantiationException | IllegalAccessException |
                        NoSuchMethodException | InvocationTargetException e) {
             LOGGER.error(throwing(e));
             throw new DemoUtilException(String.format("Exception running method %s:%s", className, methodName), e);
+        }
+
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Run the demo method in the specified demo class.
+    ///
+    /// @param  <T>         The type of return value
+    /// @param  className   java.lang.String
+    /// @param  returnType  java.lang.Class<T>
+    /// @return             T
+    /// @throws             net.jmp.util.extra.demo.DemoUtilException   When an exception occurs running the method in the class
+    public static <T> T runDemoClassDemo(final String className, final Class<T> returnType) throws DemoUtilException {
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace(entryWith(className, returnType));
+        }
+
+        final T result = runDemoClassMethod(className, "demo", returnType);
+
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// Return true if the specified class
+    /// implements the Demo interface.
+    ///
+    /// @param  clazz   java.lang.Class<?>
+    private static boolean isDemoClass(final Class<?> clazz) {
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace(entryWith(clazz));
+        }
+
+        boolean result = false;
+
+        final Class<?>[] interfaces = clazz.getInterfaces();
+
+        for (final Class<?> interfaceClass : interfaces) {
+            if (Demo.class.equals(interfaceClass)) {
+                result = true;
+
+                break;
+            }
         }
 
         if (LOGGER.isTraceEnabled()) {
