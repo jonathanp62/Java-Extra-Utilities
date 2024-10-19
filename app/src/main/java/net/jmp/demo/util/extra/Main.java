@@ -1,6 +1,7 @@
 package net.jmp.demo.util.extra;
 
 /*
+ * (#)Main.java 1.4.0   10/19/2024
  * (#)Main.java 1.3.0   10/08/2024
  * (#)Main.java 1.2.0   09/28/2024
  * (#)Main.java 1.1.0   09/27/2024
@@ -36,6 +37,8 @@ import java.util.stream.Stream;
 
 import net.jmp.demo.util.extra.demos.*;
 
+import net.jmp.util.extra.demo.Demo;
+
 import static net.jmp.util.logging.LoggerUtils.*;
 
 import org.slf4j.Logger;
@@ -45,7 +48,7 @@ import org.slf4j.LoggerFactory;
 /// and run from the bootstrap class when the
 /// application starts.
 ///
-/// @version    1.3.0
+/// @version    1.4.0
 /// @since      1.0.0
 final class Main implements Runnable {
     /// The logger.

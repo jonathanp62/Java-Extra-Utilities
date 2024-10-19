@@ -1,6 +1,7 @@
 package net.jmp.demo.util.extra;
 
 /*
+ * (#)Version.java  1.4.0   10/19/2024
  * (#)Version.java  1.3.1   10/08/2024
  * (#)Version.java  1.2.0   09/27/2024
  * (#)Version.java  1.1.0   09/26/2024
@@ -32,11 +33,11 @@ package net.jmp.demo.util.extra;
 /// The version class. This class simply
 /// provides a string constant.
 ///
-/// @version    1.3.1
+/// @version    1.4.0
 /// @since      1.0.0
 final class Version {
     /// The version.
-    static final String VERSION_STRING = "1.3.1";
+    static final String VERSION_STRING = "1.4.0";
 
     /// The default constructor.
     private Version() {
