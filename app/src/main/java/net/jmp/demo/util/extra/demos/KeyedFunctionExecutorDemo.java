@@ -1,6 +1,7 @@
 package net.jmp.demo.util.extra.demos;
 
 /*
+ * (#)KeyedFunctionExecutorDemo.java    1.4.0   10/19/2024
  * (#)KeyedFunctionExecutorDemo.java    1.1.0   09/27/2024
  *
  * MIT License
@@ -32,6 +33,8 @@ import java.util.stream.Stream;
 
 import net.jmp.util.extra.KeyedFunctionExecutor;
 
+import net.jmp.util.extra.demo.Demo;
+
 import static net.jmp.util.logging.LoggerUtils.*;
 
 import org.slf4j.Logger;
@@ -39,7 +42,7 @@ import org.slf4j.LoggerFactory;
 
 /// The class that demonstrates the keyed function executor.
 ///
-/// @version    1.1.0
+/// @version    1.4.0
 /// @since      1.1.0
 public final class KeyedFunctionExecutorDemo implements Demo {
     /// The logger.

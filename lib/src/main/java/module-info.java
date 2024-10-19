@@ -1,9 +1,10 @@
 /*
+ * (#)module-info.java  1.4.0   10/19/2024
  * (#)module-info.java  1.2.0   09/27/2024
  * (#)module-info.java  1.1.0   09/27/2024
  * (#)module-info.java  1.0.0   09/25/2024
  *
- * @version  1.2.0
+ * @version  1.4.0
  *
  * MIT License
  *
@@ -39,4 +40,5 @@ module extra.utilities {
     requires org.slf4j;
 
     exports net.jmp.util.extra;
+    exports net.jmp.util.extra.demo;
 }

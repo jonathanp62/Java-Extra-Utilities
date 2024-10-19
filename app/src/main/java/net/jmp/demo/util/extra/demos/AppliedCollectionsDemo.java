@@ -1,6 +1,7 @@
 package net.jmp.demo.util.extra.demos;
 
 /*
+ * (#)AppliedCollectionsDemo.java   1.4.0   10/19/2024
  * (#)AppliedCollectionsDemo.java   1.2.0   09/30/2024
  *
  * MIT License
@@ -40,6 +41,8 @@ import net.jmp.util.extra.AppliedList;
 import net.jmp.util.extra.AppliedQueue;
 import net.jmp.util.extra.AppliedSet;
 
+import net.jmp.util.extra.demo.Demo;
+
 import static net.jmp.util.logging.LoggerUtils.*;
 
 import org.slf4j.Logger;
@@ -47,7 +50,7 @@ import org.slf4j.LoggerFactory;
 
 /// A demonstration class for applied collections.
 ///
-/// @version    1.2.0
+/// @version    1.4.0
 /// @since      1.2.0
 public final class AppliedCollectionsDemo implements Demo {
     /// The logger.

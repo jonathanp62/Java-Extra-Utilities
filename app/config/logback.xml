@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
+ (#)logback.xml 1.4.0   10/19/2024
  (#)logback.xml 1.3.0   10/08/2024
  (#)logback.xml 1.2.0   09/27/2024
  (#)logback.xml 1.1.0   09/27/2024
  (#)logback.xml 1.0.0   09/26/2024
 
- @version  1.3.0
+ @version  1.4.0
  @since    1.0.0
 
  MIT License
@@ -52,6 +53,9 @@
         <appender-ref ref="MAIN" />
     </logger>
     <logger name="net.jmp.util.extra.KeyedFunctionExecutor" additivity="false" level="warn">
+        <appender-ref ref="MAIN" />
+    </logger>
+    <logger name="net.jmp.util.extra.demo.DemoUtils" additivity="false" level="warn">
         <appender-ref ref="MAIN" />
     </logger>
     <logger name="net.jmp.demo.util.extra.Main" additivity="false" level="info">

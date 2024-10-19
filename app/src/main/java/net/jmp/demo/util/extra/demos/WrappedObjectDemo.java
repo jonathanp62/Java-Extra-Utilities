@@ -1,6 +1,7 @@
 package net.jmp.demo.util.extra.demos;
 
 /*
+ * (#)WrappedObjectDemo.java    1.4.0   10/19/2024
  * (#)WrappedObjectDemo.java    1.0.0   09/26/2024
  *
  * MIT License
@@ -28,6 +29,8 @@ package net.jmp.demo.util.extra.demos;
 
 import net.jmp.util.extra.WrappedObject;
 
+import net.jmp.util.extra.demo.Demo;
+
 import static net.jmp.util.logging.LoggerUtils.*;
 
 import org.slf4j.Logger;
@@ -35,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 /// The class that demonstrates the wrapped object.
 ///
-/// @version    1.0.0
+/// @version    1.4.0
 /// @since      1.0.0
 public final class WrappedObjectDemo implements Demo {
     /// The logger.
