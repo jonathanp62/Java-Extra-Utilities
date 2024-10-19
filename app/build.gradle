@@ -50,6 +50,7 @@ ext {
     execDescription = 'Run the main class with JavaExecTask'
     execGroup = 'Execution'
     javaMainClass = 'net.jmp.demo.util.extra.Bootstrap'
+    appConfigFile = '-Dapp.configurationFile=config/config.json'
     logConfigFile = '-Dlogback.configurationFile=config/logback.xml'
     macosArchitecture = System.getProperty('macosArchitecture')
     useAssertions = '-ea'
@@ -81,6 +82,7 @@ repositories {
 dependencies {
     runtimeOnly         libs.ch.qos.logback.logback.classic
     runtimeOnly         libs.ch.qos.logback.logback.core
+    implementation      libs.com.google.code.gson.gson
     implementation      libs.net.jmp.util.extra.extra.utilities
     implementation      libs.net.jmp.util.logging.logging.utilities
     implementation      libs.org.slf4j.slf4j.api

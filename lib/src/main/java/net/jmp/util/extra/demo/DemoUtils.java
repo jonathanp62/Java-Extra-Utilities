@@ -156,23 +156,18 @@ public final class DemoUtils {
 
     /// Run the demo method in the specified demo class.
     ///
-    /// @param  <T>         The type of return value
     /// @param  className   java.lang.String
-    /// @param  returnType  java.lang.Class<T>
-    /// @return             T
     /// @throws             net.jmp.util.extra.demo.DemoUtilException   When an exception occurs running the method in the class
-    public static <T> T runDemoClassDemo(final String className, final Class<T> returnType) throws DemoUtilException {
+    public static void runDemoClassDemo(final String className) throws DemoUtilException {
         if (LOGGER.isTraceEnabled()) {
-            LOGGER.trace(entryWith(className, returnType));
+            LOGGER.trace(entryWith(className));
         }
 
-        final T result = runDemoClassMethod(className, "demo", returnType);
+        runDemoClassMethod(className, "demo", Void.class);
 
         if (LOGGER.isTraceEnabled()) {
-            LOGGER.trace(exitWith(result));
+            LOGGER.trace(exit());
         }
-
-        return result;
     }
 
     /// Return true if the specified class

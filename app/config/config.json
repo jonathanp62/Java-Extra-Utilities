@@ -1,0 +1,10 @@
+{
+  "version": 1.4,
+  "package": "net.jmp.demo.util.extra.demos",
+  "demos": [
+    "AppliedCollectionsDemo",
+    "DateUtilsDemo",
+    "KeyedFunctionExecutorDemo",
+    "WrappedObjectDemo"
+  ]
+}

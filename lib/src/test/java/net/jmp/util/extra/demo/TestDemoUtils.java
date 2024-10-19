@@ -72,11 +72,9 @@ public final class TestDemoUtils {
 
     @Test
     public void testRunDemoClassDemo1() throws DemoUtilException {
-        DemoUtils.runDemoClassDemo("net.jmp.util.extra.demo.AnnotatedDemoClass", Void.class);
+        DemoUtils.runDemoClassDemo("net.jmp.util.extra.demo.AnnotatedDemoClass");
 
-        final var result = DemoUtils.runDemoClassDemo("net.jmp.util.extra.demo.AnnotatedDemoClass", Void.class);
-
-        assertNull(result);
+        assertTrue(true);
     }
 
     @Test
@@ -97,11 +95,9 @@ public final class TestDemoUtils {
 
     @Test
     public void testRunDemoClassDemo2() throws DemoUtilException {
-        DemoUtils.runDemoClassDemo("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass", Void.class);
+        DemoUtils.runDemoClassDemo("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass");
 
-        final var result = DemoUtils.runDemoClassDemo("net.jmp.util.extra.demo.AnnotatedDemoNoVersionClass", Void.class);
-
-        assertNull(result);
+        assertTrue(true);
     }
 
     @Test

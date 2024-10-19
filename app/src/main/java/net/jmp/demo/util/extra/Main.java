@@ -30,14 +30,21 @@ package net.jmp.demo.util.extra;
  * SOFTWARE.
  */
 
+import com.google.gson.Gson;
+
+import com.google.gson.stream.JsonReader;
+
+import java.io.FileReader;
+import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.Objects;
 
-import java.util.stream.Stream;
+import java.util.function.Consumer;
 
-import net.jmp.demo.util.extra.demos.*;
+import net.jmp.demo.util.extra.classes.Config;
 
-import net.jmp.util.extra.demo.Demo;
+import net.jmp.util.extra.demo.*;
 
 import static net.jmp.util.logging.LoggerUtils.*;
 
@@ -77,12 +84,11 @@ final class Main implements Runnable {
 
         this.greeting();
 
-        Stream.of(
-                new WrappedObjectDemo(),
-                new KeyedFunctionExecutorDemo(),
-                new AppliedCollectionsDemo(),
-                new DateUtilsDemo()
-        ).forEach(Demo::demo);
+        try {
+            this.runDemos(this.loadConfiguration());
+        } catch (final Exception e) {
+            this.logger.error(catching(e));
+        }
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exit());
@@ -112,6 +118,64 @@ final class Main implements Runnable {
                 System.out.format("%s %s: %s%n", Name.NAME_STRING, Version.VERSION_STRING, Arrays.toString(this.arguments));
             }
         }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
+    }
+
+    /// Load the application configuration
+    ///
+    /// @return net.jmp.demo.util.extra.classes.Config
+    /// @throws java.io.IOException When an I/O error occurs reading the configuration file
+    private Config loadConfiguration() throws IOException {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
+        Config config;
+
+        final String appConfigFileName = System.getProperty("app.configurationFile", "config/config.json");
+        final Gson gson = new Gson();
+
+        try (final JsonReader reader = new JsonReader(new FileReader(appConfigFileName))) {
+            config = gson.fromJson(reader, Config.class);
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(config));
+        }
+
+        return config;
+    }
+
+    /// Run the demonstration classes.
+    ///
+    /// @param  config  net.jmp.demo.util.extra.classes.Config
+    private void runDemos(final Config config) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(config));
+        }
+
+        final Consumer<String> demoRunner = className -> {
+            try {
+                final double version = DemoUtils.getDemoClassVersion(className);
+
+                if (version > 0) {
+                    if (config.getVersion() >= version) {
+                        DemoUtils.runDemoClassDemo(className);
+                    }
+                } else {
+                    DemoUtils.runDemoClassDemo(className);
+                }
+            } catch (final DemoUtilException due) {
+                this.logger.error(catching(due));
+            }
+        };
+
+        config.getDemosAsStream()
+                .map(demo -> config.getPackageName() + "." + demo)
+                .forEach(demoRunner);
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exit());

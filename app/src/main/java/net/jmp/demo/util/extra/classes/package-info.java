@@ -1,8 +1,5 @@
 /*
- * (#)module-info.java  1.4.0   10/19/2024
- * (#)module-info.java  1.0.0   09/26/2024
- *
- * @version  1.4.0
+ * (#)package-info.java 1.4.0   10/19/2024
  *
  * MIT License
  *
@@ -27,14 +24,8 @@
  * SOFTWARE.
  */
 
-/// The extra utilities application module.
+/// The package that contains miscellaneous bean classes.
 ///
-/// @since  1.0.0
-module extra.utilities.app {
-    requires java.base;
-
-    requires com.google.gson;
-    requires extra.utilities;
-    requires logging.utilities;
-    requires org.slf4j;
-}
+/// @version    1.4.0
+/// @since      1.4.0
+package net.jmp.demo.util.extra.classes;
