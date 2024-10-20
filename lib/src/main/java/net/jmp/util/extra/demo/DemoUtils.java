@@ -93,6 +93,8 @@ public final class DemoUtils {
         } catch (final ClassNotFoundException cnfe) {
             LOGGER.error(throwing(cnfe));
             throw new DemoUtilException(String.format("Exception loading class %s", className), cnfe);
+            // @todo Transform to ...
+            // throw new DemoUtilException(String.format("Exception loading class %s", className), throwing(LOGGER, cfne));
         }
 
         if (LOGGER.isTraceEnabled()) {
